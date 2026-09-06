@@ -2,6 +2,11 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
+/**
+ * This is a dummy comment. Just to push some change together with the tag
+ * l2-task1 (Module 02 assignment)
+ */
+
 #define SLEEP_TIME_MS 1000
 
 /* The devicetree node identifier for the "led0" alias. */
