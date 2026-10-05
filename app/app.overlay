@@ -1,0 +1,12 @@
+/ {
+    leds {
+        extled: ext_led {
+            gpios = < &gpio0 0x4 0x0 >;
+            label = "External User RED LED";
+        };
+    };
+    aliases {
+        external-led = &extled;
+        app-led = &led0;
+    };
+};
