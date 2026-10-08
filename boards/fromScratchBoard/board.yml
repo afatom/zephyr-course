@@ -1,0 +1,37 @@
+board:
+  name: fromScratchBoard
+  full_name: My New fromScratchBoard
+  vendor: dummytronics
+  socs:
+    - name: nrf54l15
+      variants:
+        - name: ns
+          cpucluster: cpuapp
+runners:
+  run_once:
+    '--recover':
+      - runners:
+          - nrfjprog
+          - nrfutil
+        run: first
+        groups:
+          - boards:
+              - fromScratchBoard
+    '--erase':
+      - runners:
+          - nrfjprog
+          - jlink
+          - nrfutil
+        run: first
+        groups:
+          - boards:
+              - fromScratchBoard
+    '--reset':
+      - runners:
+          - nrfjprog
+          - jlink
+          - nrfutil
+        run: last
+        groups:
+          - boards:
+              - fromScratchBoard
