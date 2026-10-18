@@ -10,8 +10,15 @@
         app-led = &led0;
     };
 
-    obled_driver0: obled_driver {
+    obled_driver0: obled_driver0 {
         compatible = "obled,driver";
+        led-gpios = <&gpio2 0x9 GPIO_ACTIVE_HIGH>;
+        status = "okay";
+    };
+
+    obled_driver1: obled_driver1 {
+        compatible = "obled,driver";
+        led-gpios = <&gpio1 0xa GPIO_ACTIVE_HIGH>;
         status = "okay";
     };
 };
