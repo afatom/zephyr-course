@@ -9,4 +9,9 @@
         external-led = &extled;
         app-led = &led0;
     };
+
+    obled_driver0: obled_driver {
+        compatible = "obled,driver";
+        status = "okay";
+    };
 };

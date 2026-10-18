@@ -1,0 +1,3 @@
+config OBLED_DRIVER
+    bool "OBLED Driver"
+    default y

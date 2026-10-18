@@ -13,3 +13,4 @@ config APP_HEARTBEAT_PERIOD_MS
 endif # MY_LED_SUBSYS
 
 source "Kconfig.zephyr"
+rsource "drivers/obled_driver/Kconfig"

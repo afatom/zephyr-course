@@ -1,0 +1,6 @@
+/ {
+    obled_driver0: obled_driver {
+        compatible = "obled,driver";
+        status = "okay";
+    };
+};

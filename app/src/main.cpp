@@ -1,33 +1,40 @@
-#include <zephyr/drivers/gpio.h>
+// #include <zephyr/drivers/gpio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+#include <zephyr/drivers/sensor.h>
+#include <zephyr/device.h>
 
 /**
- * Home Work: Module 04 - Kconfig + overlay
- * Controlling LED0 sleep duration via Kconfig symbol CONFIG_APP_HEARTBEAT_PERIOD_MS
- * and via app-led overlay alias
+ * Home Work: Module 06 - Zephyr Driver Development
+ * Controlling on board LED0 via GPIO device driver
  */
-
-#define APP_LED DT_ALIAS(app_led)
-
-static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(APP_LED, gpios);
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
+
 int main(void)
 {
-    bool led_state = true;
+    const struct device *dev = DEVICE_DT_GET(DT_NODELABEL(obled_driver0));
+    struct sensor_value val;
 
-    if (!gpio_is_ready_dt(&led)) return 0;
+    LOG_INF("Testing on board LED (OBLED) device driver...");
 
-    if (gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE) < 0) return 0;
-  
-    while (1) {
-        if (gpio_pin_toggle_dt(&led) < 0) return 0;
-
-        led_state = !led_state;
-        LOG_INF("App LED state: %s", led_state ? "ON" : "OFF");
-        k_msleep(CONFIG_APP_HEARTBEAT_PERIOD_MS);
+    if (!device_is_ready(dev)) {
+        LOG_ERR("OBLED device not ready");
+        return -ENODEV;
     }
+
+    LOG_INF("Starting LED0 test loop...");
+
+    while (1) {
+        /* Make sure LED0 is OFF */
+        sensor_channel_get(dev, SENSOR_CHAN_ALL, &val);
+        /* wait for a short period to ensure the LED is off */
+        k_msleep(2500);
+        /* Turn LED0 ON and wait for a while */
+        sensor_sample_fetch(dev);
+        k_msleep(250);
+    }
+
     return 0;
 }
