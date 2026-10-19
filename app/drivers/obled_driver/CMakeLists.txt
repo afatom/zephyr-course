@@ -1,3 +1,6 @@
 if (CONFIG_OBLED_DRIVER)
     target_sources(app PRIVATE obled_driver.c)
+    if (CONFIG_SHELL)
+        target_sources(app PRIVATE obled_driver_shell.c)
+    endif()
 endif()

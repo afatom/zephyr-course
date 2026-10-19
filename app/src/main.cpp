@@ -34,7 +34,15 @@ int main(void)
     while (1) {
         for (const struct device *dev : devs) {
             uint32_t cnt = 0;
-
+            /**
+             * Since our new shell commands (sensor read/fetch) manipulate the same
+             * onboard LEDs Give the shell commands priority and time so we can test
+             * them without coliding with the llogic below Hence Sleep for 60 seconds
+             * I could remove the entire logic below and keep the shell clean without
+             * all the LOGs below, Since this wasnt comunicated explicitly during the
+             * lecture i will keep it AS IS
+            */
+            k_msleep(1000 * 60);
             sensor_channel_get(dev, SENSOR_CHAN_ALL, &val);
             k_msleep(1000);
             sensor_sample_fetch(dev);
