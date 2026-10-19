@@ -61,12 +61,21 @@ static int obled_driver_inc_counter(const struct device *dev, uint32_t *counter)
 	return 0;
 }
 
+static int obled_driver_set_counter(const struct device *dev, uint32_t counter)
+{
+	struct obled_data *data = dev->data;
+
+	data->counter = counter;
+	return 0;
+}
+
 static const struct obled_driver_api obled_api = {
 	.sensor = {
 		.channel_get = obled_driver_channel_get,
 		.sample_fetch = obled_driver_sample_fetch,
 	},
 	.inc_counter = obled_driver_inc_counter,
+	.set_counter = obled_driver_set_counter,
 };
 
 #define OBLED_INST(inst)							\
